@@ -1,0 +1,360 @@
+Enter password:
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 9
+Server version: 8.3.0 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2024, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show the database
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'the database' at line 1
+mysql> select * from bit2;
+ERROR 1046 (3D000): No database selected
+mysql> select *from student;
+ERROR 1046 (3D000): No database selected
+mysql> show all database;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'all database' at line 1
+mysql> use bit2;
+Database changed
+mysql> select*from student;
++---------+------------+--------+---------+------+--------+-------------+
+| reg_no  | f_name     | l_name | courses | DOB  | gender | nationality |
++---------+------------+--------+---------+------+--------+-------------+
+| Bbit001 | UWIMPAYE   | Nadine | BBIT    | 1990 | F      | Rwanda      |
+| Bbit003 | NDAYISHIMI | DAVID  | bit     | 1995 | M      | Rwanda      |
+| Bbit003 | NTIVUGURUZ | JEAN   | bcs     | 1994 | M      | Rwanda      |
++---------+------------+--------+---------+------+--------+-------------+
+3 rows in set (0.00 sec)
+
+mysql> Alter table student add department char(15);
+Query OK, 3 rows affected (0.06 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select * from student;
++---------+------------+--------+---------+------+--------+-------------+------------+
+| reg_no  | f_name     | l_name | courses | DOB  | gender | nationality | department |
++---------+------------+--------+---------+------+--------+-------------+------------+
+| Bbit001 | UWIMPAYE   | Nadine | BBIT    | 1990 | F      | Rwanda      | NULL       |
+| Bbit003 | NDAYISHIMI | DAVID  | bit     | 1995 | M      | Rwanda      | NULL       |
+| Bbit003 | NTIVUGURUZ | JEAN   | bcs     | 1994 | M      | Rwanda      | NULL       |
++---------+------------+--------+---------+------+--------+-------------+------------+
+3 rows in set (0.00 sec)
+
+mysql> update student set department='computing' where reg_no='1';
+Query OK, 0 rows affected (0.02 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+mysql> select *from student;
++---------+------------+--------+---------+------+--------+-------------+------------+
+| reg_no  | f_name     | l_name | courses | DOB  | gender | nationality | department |
++---------+------------+--------+---------+------+--------+-------------+------------+
+| Bbit001 | UWIMPAYE   | Nadine | BBIT    | 1990 | F      | Rwanda      | NULL       |
+| Bbit003 | NDAYISHIMI | DAVID  | bit     | 1995 | M      | Rwanda      | NULL       |
+| Bbit003 | NTIVUGURUZ | JEAN   | bcs     | 1994 | M      | Rwanda      | NULL       |
++---------+------------+--------+---------+------+--------+-------------+------------+
+3 rows in set (0.00 sec)
+
+mysql>  update students set department='bit' where gender='F';
+ERROR 1146 (42S02): Table 'bit2.students' doesn't exist
+mysql>  update student set department='bit' where gender='F';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select *from student;
++---------+------------+--------+---------+------+--------+-------------+------------+
+| reg_no  | f_name     | l_name | courses | DOB  | gender | nationality | department |
++---------+------------+--------+---------+------+--------+-------------+------------+
+| Bbit001 | UWIMPAYE   | Nadine | BBIT    | 1990 | F      | Rwanda      | bit        |
+| Bbit003 | NDAYISHIMI | DAVID  | bit     | 1995 | M      | Rwanda      | NULL       |
+| Bbit003 | NTIVUGURUZ | JEAN   | bcs     | 1994 | M      | Rwanda      | NULL       |
++---------+------------+--------+---------+------+--------+-------------+------------+
+3 rows in set (0.00 sec)
+
+mysql>  update students set department='acc' where gender='M';
+ERROR 1146 (42S02): Table 'bit2.students' doesn't exist
+mysql>  update student set department='acc' where gender='M';
+Query OK, 2 rows affected (0.00 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql> select *from student;
++---------+------------+--------+---------+------+--------+-------------+------------+
+| reg_no  | f_name     | l_name | courses | DOB  | gender | nationality | department |
++---------+------------+--------+---------+------+--------+-------------+------------+
+| Bbit001 | UWIMPAYE   | Nadine | BBIT    | 1990 | F      | Rwanda      | bit        |
+| Bbit003 | NDAYISHIMI | DAVID  | bit     | 1995 | M      | Rwanda      | acc        |
+| Bbit003 | NTIVUGURUZ | JEAN   | bcs     | 1994 | M      | Rwanda      | acc        |
++---------+------------+--------+---------+------+--------+-------------+------------+
+3 rows in set (0.00 sec)
+
+mysql> alter table student drop department;
+Query OK, 3 rows affected (0.05 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select *from student;
++---------+------------+--------+---------+------+--------+-------------+
+| reg_no  | f_name     | l_name | courses | DOB  | gender | nationality |
++---------+------------+--------+---------+------+--------+-------------+
+| Bbit001 | UWIMPAYE   | Nadine | BBIT    | 1990 | F      | Rwanda      |
+| Bbit003 | NDAYISHIMI | DAVID  | bit     | 1995 | M      | Rwanda      |
+| Bbit003 | NTIVUGURUZ | JEAN   | bcs     | 1994 | M      | Rwanda      |
++---------+------------+--------+---------+------+--------+-------------+
+3 rows in set (0.00 sec)
+
+mysql> desc student;
++-------------+------------+------+-----+---------+-------+
+| Field       | Type       | Null | Key | Default | Extra |
++-------------+------------+------+-----+---------+-------+
+| reg_no      | varchar(7) | YES  |     | NULL    |       |
+| f_name      | char(10)   | YES  |     | NULL    |       |
+| l_name      | char(6)    | YES  |     | NULL    |       |
+| courses     | char(5)    | YES  |     | NULL    |       |
+| DOB         | int        | YES  |     | NULL    |       |
+| gender      | char(6)    | YES  |     | NULL    |       |
+| nationality | char(8)    | YES  |     | NULL    |       |
++-------------+------------+------+-----+---------+-------+
+7 rows in set (0.06 sec)
+
+mysql> alter table student drop department;
+ERROR 1091 (42000): Can't DROP 'department'; check that column/key exists
+mysql> SELECT f_name,courses,gender:
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ':' at line 1
+mysql> SELECT f_name,courses,gender;
+ERROR 1054 (42S22): Unknown column 'f_name' in 'field list'
+mysql> select DOB from student;
++------+
+| DOB  |
++------+
+| 1990 |
+| 1995 |
+| 1994 |
++------+
+3 rows in set (0.00 sec)
+
+mysql>  use bit2;
+Database changed
+mysql> select*from student;
++---------+------------+--------+---------+------+--------+-------------+
+| reg_no  | f_name     | l_name | courses | DOB  | gender | nationality |
++---------+------------+--------+---------+------+--------+-------------+
+| Bbit001 | UWIMPAYE   | Nadine | BBIT    | 1990 | F      | Rwanda      |
+| Bbit003 | NDAYISHIMI | DAVID  | bit     | 1995 | M      | Rwanda      |
+| Bbit003 | NTIVUGURUZ | JEAN   | bcs     | 1994 | M      | Rwanda      |
++---------+------------+--------+---------+------+--------+-------------+
+3 rows in set (0.00 sec)
+
+mysql> select*from student where gender='F' OR nationality='Rwanda';
++---------+------------+--------+---------+------+--------+-------------+
+| reg_no  | f_name     | l_name | courses | DOB  | gender | nationality |
++---------+------------+--------+---------+------+--------+-------------+
+| Bbit001 | UWIMPAYE   | Nadine | BBIT    | 1990 | F      | Rwanda      |
+| Bbit003 | NDAYISHIMI | DAVID  | bit     | 1995 | M      | Rwanda      |
+| Bbit003 | NTIVUGURUZ | JEAN   | bcs     | 1994 | M      | Rwanda      |
++---------+------------+--------+---------+------+--------+-------------+
+3 rows in set (0.00 sec)
+
+mysql> CREATE DATABASE RUHANDE;
+Query OK, 1 row affected (0.02 sec)
+
+mysql> USE NGOMA;
+ERROR 1049 (42000): Unknown database 'ngoma'
+mysql> USE RUHANDE;
+Database changed
+mysql> CREATE TABLE NGOMA;
+ERROR 4028 (HY000): A table must have at least one visible column.
+mysql> CREATE TABLE NGOMA (ID INT(10
+    ->
+    ->
+    ->
+    ->
+    ->
+    ->
+    ->
+    ->
+    ->
+    ->
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> CREATE TABLE NGOMA(ID INT(10),F_NAME CHAR(8),L_NAME CHAR(5),GENDER CHAR(6),PROVENCE CHAR(10),DISRICT CHAR(10),SECTOR CHAR(11),CELL CHAR(12),EMAIL CHAR(10),TELPHONE INT(10));
+Query OK, 0 rows affected, 2 warnings (0.03 sec)
+
+mysql> INSERT INTO NGOMA VALUES('1','MUKAMA','Lea','F','SOUTHERN','NYAMAGABE','GASAKA','NYAMUGARI','lea@gmail.com','0789973743')
+    -> ;
+Query OK, 1 row affected, 1 warning (0.00 sec)
+
+mysql> INSERT INTO NGOMA VALUES('1','MUKAMA','Lea','F','SOUTHERN','NYAMAGABE','GASAKA','NYAMUGARI','lea@gmail.com','0789973743');
+Query OK, 1 row affected, 1 warning (0.00 sec)
+
+mysql> select*from NGOMA;
++------+--------+--------+--------+----------+-----------+--------+-----------+------------+-----------+
+| ID   | F_NAME | L_NAME | GENDER | PROVENCE | DISRICT   | SECTOR | CELL      | EMAIL      | TELPHONE  |
++------+--------+--------+--------+----------+-----------+--------+-----------+------------+-----------+
+|    1 | MUKAMA | Lea    | F      | SOUTHERN | NYAMAGABE | GASAKA | NYAMUGARI | lea@gmail. | 789973743 |
+|    1 | MUKAMA | Lea    | F      | SOUTHERN | NYAMAGABE | GASAKA | NYAMUGARI | lea@gmail. | 789973743 |
++------+--------+--------+--------+----------+-----------+--------+-----------+------------+-----------+
+2 rows in set (0.00 sec)
+
+mysql> INSERT INTO NGOMA VALUES('2','GUHIRWA','Lea','F','SOUTHERN','NYARUGURU','NGERA','MURAMA','divine@gmail.com','0789003743');
+Query OK, 1 row affected, 1 warning (0.01 sec)
+
+mysql> INSERT INTO NGOMA VALUES('3','GUHIRWA','Lea','F','KIGALI','NYARUGURU','GISOZI','RUHANGO','one@gmail.com','0789003903');
+Query OK, 1 row affected, 1 warning (0.00 sec)
+
+mysql> select*from NGOMA;
++------+---------+--------+--------+----------+-----------+--------+-----------+------------+-----------+
+| ID   | F_NAME  | L_NAME | GENDER | PROVENCE | DISRICT   | SECTOR | CELL      | EMAIL      | TELPHONE  |
++------+---------+--------+--------+----------+-----------+--------+-----------+------------+-----------+
+|    1 | MUKAMA  | Lea    | F      | SOUTHERN | NYAMAGABE | GASAKA | NYAMUGARI | lea@gmail. | 789973743 |
+|    1 | MUKAMA  | Lea    | F      | SOUTHERN | NYAMAGABE | GASAKA | NYAMUGARI | lea@gmail. | 789973743 |
+|    2 | GUHIRWA | Lea    | F      | SOUTHERN | NYARUGURU | NGERA  | MURAMA    | divine@gma | 789003743 |
+|    3 | GUHIRWA | Lea    | F      | KIGALI   | NYARUGURU | GISOZI | RUHANGO   | one@gmail. | 789003903 |
++------+---------+--------+--------+----------+-----------+--------+-----------+------------+-----------+
+4 rows in set (0.00 sec)
+
+mysql> DELETE FROM TABLE NGOMA WHERE IR=1;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'TABLE NGOMA WHERE IR=1' at line 1
+mysql> DELETE FROM TABLE NGOMA WHERE ID=1;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'TABLE NGOMA WHERE ID=1' at line 1
+mysql> DROP FROM TABLE NGOMA WHERE ID=1;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'FROM TABLE NGOMA WHERE ID=1' at line 1
+mysql> DROP FROM GOMA WHERE ID=1;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'FROM GOMA WHERE ID=1' at line 1
+mysql> DELETE FROM NGOMA WHERE ID=1;
+Query OK, 2 rows affected (0.01 sec)
+
+mysql> select*from NGOMA;
++------+---------+--------+--------+----------+-----------+--------+---------+------------+-----------+
+| ID   | F_NAME  | L_NAME | GENDER | PROVENCE | DISRICT   | SECTOR | CELL    | EMAIL      | TELPHONE  |
++------+---------+--------+--------+----------+-----------+--------+---------+------------+-----------+
+|    2 | GUHIRWA | Lea    | F      | SOUTHERN | NYARUGURU | NGERA  | MURAMA  | divine@gma | 789003743 |
+|    3 | GUHIRWA | Lea    | F      | KIGALI   | NYARUGURU | GISOZI | RUHANGO | one@gmail. | 789003903 |
++------+---------+--------+--------+----------+-----------+--------+---------+------------+-----------+
+2 rows in set (0.00 sec)
+
+mysql> UPDATE NGOMA SET ID=1 WHERE SECTOR='NGERA';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE NGOMA SET ID=2 WHERE SECTOR='GISOZI';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select*from NGOMA;
++------+---------+--------+--------+----------+-----------+--------+---------+------------+-----------+
+| ID   | F_NAME  | L_NAME | GENDER | PROVENCE | DISRICT   | SECTOR | CELL    | EMAIL      | TELPHONE  |
++------+---------+--------+--------+----------+-----------+--------+---------+------------+-----------+
+|    1 | GUHIRWA | Lea    | F      | SOUTHERN | NYARUGURU | NGERA  | MURAMA  | divine@gma | 789003743 |
+|    2 | GUHIRWA | Lea    | F      | KIGALI   | NYARUGURU | GISOZI | RUHANGO | one@gmail. | 789003903 |
++------+---------+--------+--------+----------+-----------+--------+---------+------------+-----------+
+2 rows in set (0.00 sec)
+
+mysql> INSERT INTO NGOMA VALUES('3','MUHIRWA','Rebecca','F','NORTHERN','MUSANZE','MUHOZA','KABEZA','becca@gmail.com','0789003953');
+Query OK, 1 row affected, 2 warnings (0.00 sec)
+
+mysql> INSERT INTO NGOMA VALUES('4','MUNEZERO','ENOCK','M','NORTHERN','GICUMBI','MUHAZI','KAZE','enock@gmail.com','0789666953');
+Query OK, 1 row affected, 1 warning (0.00 sec)
+
+mysql> INSERT INTO NGOMA VALUES('5','TWIZEYIMANA','one','M','KIGALI','GISOZI','REBERO','twize@gmail.com','0789666922');
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> INSERT INTO NGOMA VALUES('5','TWIZEYIMANA','one','M','KIGALI','GISOZI','REBERO','kiyovu','twize@gmail.com','0789666922');
+Query OK, 1 row affected, 2 warnings (0.00 sec)
+
+mysql> select*from NGOMA;
++------+----------+--------+--------+----------+-----------+--------+---------+------------+-----------+
+| ID   | F_NAME   | L_NAME | GENDER | PROVENCE | DISRICT   | SECTOR | CELL    | EMAIL      | TELPHONE  |
++------+----------+--------+--------+----------+-----------+--------+---------+------------+-----------+
+|    4 | MUNEZERO | ENOCK  | M      | NORTHERN | GICUMBI   | MUHAZI | KAZE    | enock@gmai | 789666953 |
+|    3 | MUHIRWA  | Rebec  | F      | NORTHERN | MUSANZE   | MUHOZA | KABEZA  | becca@gmai | 789003953 |
+|    1 | GUHIRWA  | Lea    | F      | SOUTHERN | NYARUGURU | NGERA  | MURAMA  | divine@gma | 789003743 |
+|    2 | GUHIRWA  | Lea    | F      | KIGALI   | NYARUGURU | GISOZI | RUHANGO | one@gmail. | 789003903 |
+|    5 | TWIZEYIM | one    | M      | KIGALI   | GISOZI    | REBERO | kiyovu  | twize@gmai | 789666922 |
++------+----------+--------+--------+----------+-----------+--------+---------+------------+-----------+
+5 rows in set (0.00 sec)
+
+mysql> INSERT INTO NGOMA VALUES('6','UWINGABIRE','olivie','M','KIGALI','KACYIRU','MEMBE','KAZU','oli@gmail.com','0799666922');
+Query OK, 1 row affected, 3 warnings (0.00 sec)
+
+mysql> INSERT INTO NGOMA VALUES('7','IYABANJE','regine','F','SOUTHERN','HUYE','NGOMA','RUHANDE','oli@gmail.com','0799666922');
+Query OK, 1 row affected, 2 warnings (0.00 sec)
+
+mysql> SELECT*FROM NGOMA;
++------+----------+--------+--------+----------+-----------+--------+---------+------------+-----------+
+| ID   | F_NAME   | L_NAME | GENDER | PROVENCE | DISRICT   | SECTOR | CELL    | EMAIL      | TELPHONE  |
++------+----------+--------+--------+----------+-----------+--------+---------+------------+-----------+
+|    4 | MUNEZERO | ENOCK  | M      | NORTHERN | GICUMBI   | MUHAZI | KAZE    | enock@gmai | 789666953 |
+|    3 | MUHIRWA  | Rebec  | F      | NORTHERN | MUSANZE   | MUHOZA | KABEZA  | becca@gmai | 789003953 |
+|    1 | GUHIRWA  | Lea    | F      | SOUTHERN | NYARUGURU | NGERA  | MURAMA  | divine@gma | 789003743 |
+|    2 | GUHIRWA  | Lea    | F      | KIGALI   | NYARUGURU | GISOZI | RUHANGO | one@gmail. | 789003903 |
+|    5 | TWIZEYIM | one    | M      | KIGALI   | GISOZI    | REBERO | kiyovu  | twize@gmai | 789666922 |
+|    6 | UWINGABI | olivi  | M      | KIGALI   | KACYIRU   | MEMBE  | KAZU    | oli@gmail. | 799666922 |
+|    7 | IYABANJE | regin  | F      | SOUTHERN | HUYE      | NGOMA  | RUHANDE | oli@gmail. | 799666922 |
++------+----------+--------+--------+----------+-----------+--------+---------+------------+-----------+
+7 rows in set (0.00 sec)
+
+mysql> INSERT INTO NGOMA VALUES('8','NTIZADUKOZISONI','abraham','M','SOUTHERN','HUYE','NGOMA','MUYOGORO','abra@gmail.com','0722666922');
+Query OK, 1 row affected, 3 warnings (0.00 sec)
+
+mysql> INSERT INTO NGOMA VALUES('9','UCYEYE','Marthe','F','WESTERN','RUBAVU','KIBIRIZI','MUYOVU','ucye@gmail.com','0788621769');
+Query OK, 1 row affected, 2 warnings (0.00 sec)
+
+mysql> INSERT INTO NGOMA VALUES('10','NSENGIMANA','Samuel','M','EASTERN','KIREHE','NYAKARAMBI','MUKIZA','sam@gmail.com','0723621769');
+Query OK, 1 row affected, 3 warnings (0.00 sec)
+
+mysql> select*from NGOMA;
++------+----------+--------+--------+----------+-----------+------------+----------+------------+-----------+
+| ID   | F_NAME   | L_NAME | GENDER | PROVENCE | DISRICT   | SECTOR     | CELL     | EMAIL      | TELPHONE  |
++------+----------+--------+--------+----------+-----------+------------+----------+------------+-----------+
+|    4 | MUNEZERO | ENOCK  | M      | NORTHERN | GICUMBI   | MUHAZI     | KAZE     | enock@gmai | 789666953 |
+|    3 | MUHIRWA  | Rebec  | F      | NORTHERN | MUSANZE   | MUHOZA     | KABEZA   | becca@gmai | 789003953 |
+|    1 | GUHIRWA  | Lea    | F      | SOUTHERN | NYARUGURU | NGERA      | MURAMA   | divine@gma | 789003743 |
+|    2 | GUHIRWA  | Lea    | F      | KIGALI   | NYARUGURU | GISOZI     | RUHANGO  | one@gmail. | 789003903 |
+|    5 | TWIZEYIM | one    | M      | KIGALI   | GISOZI    | REBERO     | kiyovu   | twize@gmai | 789666922 |
+|    6 | UWINGABI | olivi  | M      | KIGALI   | KACYIRU   | MEMBE      | KAZU     | oli@gmail. | 799666922 |
+|    7 | IYABANJE | regin  | F      | SOUTHERN | HUYE      | NGOMA      | RUHANDE  | oli@gmail. | 799666922 |
+|    8 | NTIZADUK | abrah  | M      | SOUTHERN | HUYE      | NGOMA      | MUYOGORO | abra@gmail | 722666922 |
+|    9 | UCYEYE   | Marth  | F      | WESTERN  | RUBAVU    | KIBIRIZI   | MUYOVU   | ucye@gmail | 788621769 |
+|   10 | NSENGIMA | Samue  | M      | EASTERN  | KIREHE    | NYAKARAMBI | MUKIZA   | sam@gmail. | 723621769 |
++------+----------+--------+--------+----------+-----------+------------+----------+------------+-----------+
+10 rows in set (0.00 sec)
+
+mysql>mysql> select*from NGOMA;
++------+----------+--------+--------+----------+-----------+------------+----------+------------+-----------+------------+
+| ID   | F_NAME   | L_NAME | GENDER | PROVENCE | DISRICT   | SECTOR     | CELL     | EMAIL      | TELPHONE  | department |
++------+----------+--------+--------+----------+-----------+------------+----------+------------+-----------+------------+
+|    4 | MUNEZERO | ENOCK  | M      | NORTHERN | GICUMBI   | MUHAZI     | KAZE     | enock@gmai | 789666953 | NULL       |
+|    3 | MUHIRWA  | Rebec  | F      | NORTHERN | MUSANZE   | MUHOZA     | KABEZA   | becca@gmai | 789003953 | NULL       |
+|    1 | GUHIRWA  | Lea    | F      | SOUTHERN | NYARUGURU | NGERA      | MURAMA   | divine@gma | 789003743 | NULL       |
+|    2 | GUHIRWA  | Lea    | F      | KIGALI   | NYARUGURU | GISOZI     | RUHANGO  | one@gmail. | 789003903 | NULL       |
+|    5 | TWIZEYIM | one    | M      | KIGALI   | GISOZI    | REBERO     | kiyovu   | twize@gmai | 789666922 | NULL       |
+|    6 | UWINGABI | olivi  | M      | KIGALI   | KACYIRU   | MEMBE      | KAZU     | oli@gmail. | 799666922 | NULL       |
+|    7 | IYABANJE | regin  | F      | SOUTHERN | HUYE      | NGOMA      | RUHANDE  | oli@gmail. | 799666922 | NULL       |
+|    8 | NTIZADUK | abrah  | M      | SOUTHERN | HUYE      | NGOMA      | MUYOGORO | abra@gmail | 722666922 | NULL       |
+|    9 | UCYEYE   | Marth  | F      | WESTERN  | RUBAVU    | KIBIRIZI   | MUYOVU   | ucye@gmail | 788621769 | NULL       |
+|   10 | NSENGIMA | Samue  | M      | EASTERN  | KIREHE    | NYAKARAMBI | MUKIZA   | sam@gmail. | 723621769 | NULL       |
++------+----------+--------+--------+----------+-----------+------------+----------+------------+-----------+------------+
+mysql> alter table NGOMA drop department;
+Query OK, 10 rows affected (0.03 sec)
+Records: 10  Duplicates: 0  Warnings: 0
+
+mysql> SELECT*FROM NGOMA;
++------+----------+--------+--------+----------+-----------+------------+----------+------------+-----------+
+| ID   | F_NAME   | L_NAME | GENDER | PROVENCE | DISRICT   | SECTOR     | CELL     | EMAIL      | TELPHONE  |
++------+----------+--------+--------+----------+-----------+------------+----------+------------+-----------+
+|    4 | MUNEZERO | ENOCK  | M      | NORTHERN | GICUMBI   | MUHAZI     | KAZE     | enock@gmai | 789666953 |
+|    3 | MUHIRWA  | Rebec  | F      | NORTHERN | MUSANZE   | MUHOZA     | KABEZA   | becca@gmai | 789003953 |
+|    1 | GUHIRWA  | Lea    | F      | SOUTHERN | NYARUGURU | NGERA      | MURAMA   | divine@gma | 789003743 |
+|    2 | GUHIRWA  | Lea    | F      | KIGALI   | NYARUGURU | GISOZI     | RUHANGO  | one@gmail. | 789003903 |
+|    5 | TWIZEYIM | one    | M      | KIGALI   | GISOZI    | REBERO     | kiyovu   | twize@gmai | 789666922 |
+|    6 | UWINGABI | olivi  | M      | KIGALI   | KACYIRU   | MEMBE      | KAZU     | oli@gmail. | 799666922 |
+|    7 | IYABANJE | regin  | F      | SOUTHERN | HUYE      | NGOMA      | RUHANDE  | oli@gmail. | 799666922 |
+|    8 | NTIZADUK | abrah  | M      | SOUTHERN | HUYE      | NGOMA      | MUYOGORO | abra@gmail | 722666922 |
+|    9 | UCYEYE   | Marth  | F      | WESTERN  | RUBAVU    | KIBIRIZI   | MUYOVU   | ucye@gmail | 788621769 |
+|   10 | NSENGIMA | Samue  | M      | EASTERN  | KIREHE    | NYAKARAMBI | MUKIZA   | sam@gmail. | 723621769 |
++------+----------+--------+--------+----------+-----------+------------+----------+------------+-----------+
+10 rows in set (0.00 sec).
